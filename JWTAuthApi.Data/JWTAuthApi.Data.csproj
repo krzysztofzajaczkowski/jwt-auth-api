@@ -17,4 +17,8 @@
     <ProjectReference Include="..\JWTAuthApi.Core\JWTAuthApi.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Database\" />
+  </ItemGroup>
+
 </Project>
