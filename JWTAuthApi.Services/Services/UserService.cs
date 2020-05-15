@@ -1,17 +1,28 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
+using JWTAuthApi.Core.Helpers;
 using JWTAuthApi.Core.Interfaces;
 using JWTAuthApi.Core.Models;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace JWTAuthApi.Services.Services
 {
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+        private readonly JWTAuthSettings _JWTAuthSettings;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUserRepository userRepository, IOptions<JWTAuthSettings> JWTAuthSettings)
         {
             _userRepository = userRepository;
+            _JWTAuthSettings = JWTAuthSettings.Value;
+
         }
 
         public async Task<int> AddAsync(User user)
@@ -39,5 +50,34 @@ namespace JWTAuthApi.Services.Services
         {
             await _userRepository.DeleteAsync(userId);
         }
+
+        public async Task<User> Authenticate(string username, string password)
+        {
+            var users = await _userRepository.GetAllAsync();
+            var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+
+            if (user == null)
+            {
+                return null;
+            }
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_JWTAuthSettings.Secret);
+            var claims = new List<Claim>();
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
+            claims.Add(new Claim(ClaimTypes.Name, user.Username));
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(claims),
+                Expires = DateTime.UtcNow.AddDays(7),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            user.Token = tokenHandler.WriteToken(token);
+            await _userRepository.UpdateAsync(user);
+
+            return user;
+
+        }
+
     }
 }
