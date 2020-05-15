@@ -7,6 +7,8 @@ using JWTAuthApi.Core.Interfaces;
 using JWTAuthApi.Core.Models;
 using JWTAuthApi.Services.Services;
 using JWTAuthApi.Web.Dtos.UserDtos;
+using JWTAuthApi.Web.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JWTAuthApi.Web.Controllers
@@ -32,10 +34,26 @@ namespace JWTAuthApi.Web.Controllers
             return StatusCode(201, userId);
         }
 
+        [HttpGet("profile")]
+        [Authorize]
+        public async Task<IActionResult> GetUserProfile()
+        {
+            var userId = HttpContextHelper.GetIdByContextUser(HttpContext.User);
+            var user = await _userService.GetByIdAsync(userId);
+            var userDetailsDto = _mapper.Map<UserDetailsDto>(user);
+            return Ok(userDetailsDto);
+        }
+
         [HttpGet("{userId}")]
         public async Task<IActionResult> GetByIdAsync(int userId)
         {
             var user = await _userService.GetByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound(new { message = "User doesn't exist!" });
+            }
+
             var userDetailsDto = _mapper.Map<UserDetailsDto>(user);
             return Ok(userDetailsDto);
         }
@@ -62,6 +80,19 @@ namespace JWTAuthApi.Web.Controllers
         {
             await _userService.DeleteAsync(userId);
             return Ok();
+        }
+
+        [HttpPost("authenticate")]
+        public async Task<IActionResult> AuthenticateAsync(UserLoginDto userLoginDto)
+        {
+            var user = await _userService.Authenticate(userLoginDto.Username, userLoginDto.Password);
+
+            if (user == null)
+            {
+                return BadRequest(new { message = "Username or password is incorrect" });
+            }
+
+            return Ok(user);
         }
     }
 }
