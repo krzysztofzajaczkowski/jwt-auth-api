@@ -27,6 +27,8 @@ namespace JWTAuthApi.Services.Services
 
         public async Task<int> AddAsync(User user)
         {
+            var hasher = new PasswordHasher();
+            user.Password = hasher.HashPassword(user.Password);
             var userId = await _userRepository.AddAsync(user);
             return userId;
         }
@@ -53,8 +55,9 @@ namespace JWTAuthApi.Services.Services
 
         public async Task<User> Authenticate(string username, string password)
         {
+            var hasher = new PasswordHasher();
             var users = await _userRepository.GetAllAsync();
-            var user = users.FirstOrDefault(u => u.Username == username && u.Password == password);
+            var user = users.FirstOrDefault(u => u.Username == username && hasher.VerifyPassword(u.Password, password));
 
             if (user == null)
             {
