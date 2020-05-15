@@ -20,5 +20,40 @@ namespace JWTAuthApi.Web.Controllers
             _userService = userService;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddAsync(User user)
+        {
+            var userId = await _userService.AddAsync(user);
+            return StatusCode(201, userId);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(int userId)
+        {
+            var user = await _userService.GetByIdAsync(userId);
+            return Ok(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAllAsync()
+        {
+            var users = await _userService.GetAllAsync();
+            return Ok(users);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAsync(int id, User updatedUser)
+        {
+            updatedUser.Id = id;
+            await _userService.UpdateAsync(updatedUser);
+            return Ok();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAsync(int id)
+        {
+            await _userService.DeleteAsync(id);
+            return Ok();
+        }
     }
 }
