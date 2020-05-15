@@ -2,10 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using JWTAuthApi.Core.Interfaces;
 using JWTAuthApi.Data.Context;
 using JWTAuthApi.Data.Repositories;
 using JWTAuthApi.Services.Services;
+using JWTAuthApi.Web.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -36,6 +38,8 @@ namespace JWTAuthApi.Web
             services.AddTransient<IUserRepository, UserRepository>();
 
             services.AddTransient<IUserService, UserService>();
+
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services.AddControllers();
         }
