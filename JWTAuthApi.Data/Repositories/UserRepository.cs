@@ -16,10 +16,11 @@ namespace JWTAuthApi.Data.Repositories
             _dbContext = dbContext;
         }
 
-        public async Task AddAsync(User user)
+        public async Task<int> AddAsync(User user)
         {
             await _dbContext.AddAsync(user);
             await _dbContext.SaveChangesAsync();
+            return user.Id;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()

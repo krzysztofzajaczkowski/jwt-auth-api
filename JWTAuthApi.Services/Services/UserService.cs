@@ -14,9 +14,10 @@ namespace JWTAuthApi.Services.Services
             _userRepository = userRepository;
         }
 
-        public async Task AddAsync(User user)
+        public async Task<int> AddAsync(User user)
         {
-            await _userRepository.AddAsync(user);
+            var userId = await _userRepository.AddAsync(user);
+            return userId;
         }
 
         public async Task<IEnumerable<User>> GetAllAsync()
