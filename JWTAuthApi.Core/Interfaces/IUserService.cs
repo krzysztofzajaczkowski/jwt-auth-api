@@ -11,5 +11,6 @@ namespace JWTAuthApi.Core.Interfaces
         Task<IEnumerable<User>> GetAllAsync();
         Task UpdateAsync(User updatedUser);
         Task DeleteAsync(int userId);
+        Task<User> Authenticate(string username, string password);
     }
 }
