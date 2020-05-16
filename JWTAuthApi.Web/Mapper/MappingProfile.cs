@@ -12,6 +12,11 @@ namespace JWTAuthApi.Web.Mapper
             CreateMap<UserUpdateDto, User>();
             CreateMap<UserRegisterDto, User>();
             CreateMap<UserLoginDto, User>();
+            CreateMap<User, UserDetailsDto>();
+            CreateMap<User, UserPreviewDto>();
+
+            CreateMap<UserRole, UserRoleDto>();
+            CreateMap<UserRoleDto, UserRole>();
         }
     }
 }

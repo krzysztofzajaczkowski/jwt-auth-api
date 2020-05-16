@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using JWTAuthApi.Core.Entities;
 using JWTAuthApi.Core.Helpers;
 using JWTAuthApi.Core.Interfaces;
 using JWTAuthApi.Core.Models;
@@ -29,6 +30,7 @@ namespace JWTAuthApi.Services.Services
         {
             var hasher = new PasswordHasher();
             user.Password = hasher.HashPassword(user.Password);
+            user.Roles.Add(new UserRole(){ Role = RolesEntity.User});
             var userId = await _userRepository.AddAsync(user);
             return userId;
         }
@@ -65,7 +67,7 @@ namespace JWTAuthApi.Services.Services
             }
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_JWTAuthSettings.Secret);
-            var claims = new List<Claim>();
+            var claims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Role)).ToList();
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.Username));
             var tokenDescriptor = new SecurityTokenDescriptor
