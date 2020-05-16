@@ -31,6 +31,10 @@ namespace JWTAuthApi.Services.Services
             var hasher = new PasswordHasher();
             user.Password = hasher.HashPassword(user.Password);
             user.Roles.Add(new UserRole(){ Role = RolesEntity.User});
+            if (user.Policies.FirstOrDefault(p => p.Policy == PoliciesEntity.AccessLevelClaimType) == null)
+            {
+                user.Policies.Add(new UserPolicy() { Policy = PoliciesEntity.AccessLevelClaimType, Value = "1" });
+            }
             var userId = await _userRepository.AddAsync(user);
             return userId;
         }
@@ -68,8 +72,10 @@ namespace JWTAuthApi.Services.Services
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_JWTAuthSettings.Secret);
             var claims = user.Roles.Select(r => new Claim(ClaimTypes.Role, r.Role)).ToList();
+            claims.AddRange(user.Policies.Select(p => new Claim(p.Policy, p.Value)));
             claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
             claims.Add(new Claim(ClaimTypes.Name, user.Username));
+            // claims.Add(new Claim(PoliciesEntity.AccessLevelClaimType, 3.ToString()));
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(claims),
