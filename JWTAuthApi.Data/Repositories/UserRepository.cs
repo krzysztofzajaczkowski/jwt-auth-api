@@ -25,12 +25,12 @@ namespace JWTAuthApi.Data.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _dbContext.Users.ToListAsync();
+            return await _dbContext.Users.Include(u => u.Roles).ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int userId)
         {
-            return await _dbContext.Users.FindAsync(userId);
+            return await _dbContext.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task UpdateAsync(User updatedUser)
@@ -40,7 +40,7 @@ namespace JWTAuthApi.Data.Repositories
         }
         public async Task DeleteAsync(int userId)
         {
-            var userToDelete = await _dbContext.Users.FindAsync(userId);
+            var userToDelete = await _dbContext.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == userId);
             _dbContext.Users.Remove(userToDelete);
             await _dbContext.SaveChangesAsync();
         }
