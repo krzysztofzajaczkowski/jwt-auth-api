@@ -11,5 +11,7 @@ namespace JWTAuthApi.Data.Context
             : base(options) {}
 
         public DbSet<User> Users { get; set; }
+        public DbSet<UserRole> UserRoles { get; set; }
+
     }
 }
