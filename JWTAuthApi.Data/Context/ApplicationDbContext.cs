@@ -13,5 +13,7 @@ namespace JWTAuthApi.Data.Context
         public DbSet<User> Users { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
 
+        public DbSet<UserPolicy> UserPolicies { get; set; }
+
     }
 }
