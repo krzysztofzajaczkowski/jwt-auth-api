@@ -1,4 +1,4 @@
-﻿namespace JWTAuthApi.Web.Dtos.UserDtos
+﻿namespace JWTAuthApi.Web.Dtos.UserRoleDtos
 {
     public class UserRoleDto
     {
