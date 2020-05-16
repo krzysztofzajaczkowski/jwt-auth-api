@@ -25,12 +25,12 @@ namespace JWTAuthApi.Data.Repositories
 
         public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _dbContext.Users.Include(u => u.Roles).ToListAsync();
+            return await _dbContext.Users.Include(u => u.Roles).Include(u => u.Policies).ToListAsync();
         }
 
         public async Task<User> GetByIdAsync(int userId)
         {
-            return await _dbContext.Users.Include(u => u.Roles).FirstOrDefaultAsync(u => u.Id == userId);
+            return await _dbContext.Users.Include(u => u.Roles).Include(u => u.Policies).FirstOrDefaultAsync(u => u.Id == userId);
         }
 
         public async Task UpdateAsync(User updatedUser)
