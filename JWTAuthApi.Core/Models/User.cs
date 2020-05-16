@@ -7,6 +7,7 @@ namespace JWTAuthApi.Core.Models
         public User()
         {
             Roles = new List<UserRole>();
+            Policies = new List<UserPolicy>();
         }
         public int Id { get; set; }
         public string Username { get; set; }
@@ -14,5 +15,6 @@ namespace JWTAuthApi.Core.Models
         public string Password { get; set; }
         public string Token { get; set; }
         public List<UserRole> Roles { get; set; }
+        public List<UserPolicy> Policies { get; set; }
     }
 }
