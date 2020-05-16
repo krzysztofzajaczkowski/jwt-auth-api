@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using JWTAuthApi.Core.Entities;
 using JWTAuthApi.Core.Helpers;
 using JWTAuthApi.Core.Interfaces;
 using JWTAuthApi.Data.Context;
 using JWTAuthApi.Data.Repositories;
 using JWTAuthApi.Services.Services;
 using JWTAuthApi.Web.Mapper;
+using JWTAuthApi.Web.Policies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -69,6 +72,19 @@ namespace JWTAuthApi.Web
                     ValidateAudience = false
                 };
             });
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(PoliciesEntity.AccessLevel3, options =>
+                {
+                    options.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
+                    options.RequireAuthenticatedUser();
+                    //options.RequireClaim(PoliciesEntity.AccessLevelClaimType, 3.ToString());
+                    options.Requirements.Add(new AccessLevelRequirement(3));
+                });
+            });
+
+            services.AddSingleton<IAuthorizationHandler, AccessLevelAuthorizationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
