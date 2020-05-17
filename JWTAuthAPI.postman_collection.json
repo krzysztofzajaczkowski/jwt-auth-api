@@ -1,0 +1,256 @@
+{
+	"info": {
+		"_postman_id": "b01a92ae-abdc-4c62-9d21-e1c99e95b8b6",
+		"name": "JWTAuthAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "GetAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						},
+						"description": "[No authentication or authorization]\r\nGet full information about all users in database."
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] Staff/GetAll",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Admin",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 3",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 1",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "User",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/staff/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"staff",
+								"users"
+							]
+						},
+						"description": "[Authentication and Authorization]\r\nGet info about Name, Username, Roles and Policies of all users with same or lower AccessLevel.\r\nOnly Staff role allowed."
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] Admin/GetAll copy",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Admin",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 1",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "User",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/admin/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin",
+								"users"
+							]
+						},
+						"description": "[Authentication and Authorization]\r\nGet full information about all users in database.\r\nOnly Admin role allowed."
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] UserProfile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Admin",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 3",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "Staff AccessLevel 1",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer",
+								"description": "User",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/users/profile",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"profile"
+							]
+						},
+						"description": "[Authentication and Authorization]\r\nGet all your(user's) information."
+					},
+					"response": []
+				},
+				{
+					"name": "[Auth] Authenticate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Username\": \"admin\",\n\t\"Password\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/users/authenticate",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"authenticate"
+							]
+						},
+						"description": "Authentication using username and password. All user's details are returned."
+					},
+					"response": []
+				},
+				{
+					"name": "Add",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"Name\": \"TestUser\",\n\t\"Username\": \"user\",\n\t\"Password\": \"user\"\n}"
+						},
+						"url": {
+							"raw": "localhost:8080/users",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						},
+						"description": "[No authentication or authorization]\r\nAdd new user.\r\nRole: User\r\nAccessLevel: 1"
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8080/users/4",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users",
+								"4"
+							]
+						},
+						"description": "[No authentication or authorization]\r\nGet full user's information."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
