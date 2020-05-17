@@ -70,7 +70,7 @@ SQLite .db file is pre-filled with data, there are 4 users and their roles/polic
 ``user:user``
 
 Each one has a different variant of Role/Policy, to show differences between them.
-There is a basic Postman requests collection with description in ``JWTAuthAPI.postman_collection.json``, for authentication and authorization test purposes. 
+There is a basic Postman collection with description in ``JWTAuthAPI.postman_collection.json``, for authentication and authorization test purposes. 
 
 ## Contact
 Krzysztof Zajączkowski - krzysztof.m.zajaczkowski@gmail.com
@@ -78,4 +78,4 @@ Krzysztof Zajączkowski - krzysztof.m.zajaczkowski@gmail.com
 [build-status-shield]: https://travis-ci.org/krzysztofzajaczkowski/jwt-auth-api.svg?branch=develop
 [build-status-url]: https://travis-ci.org/krzysztofzajaczkowski/jwt-auth-api
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=flat-square&logo=linkedin&colorB=555
-[linkedin-url]: [https://www.linkedin.com/in/krzysztof-m-zajaczkowski/](https://www.linkedin.com/in/krzysztof-m-zajaczkowski/)
+[linkedin-url]: https://www.linkedin.com/in/krzysztof-m-zajaczkowski/
