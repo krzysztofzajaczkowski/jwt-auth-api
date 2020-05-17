@@ -61,7 +61,7 @@ And run container using
 docker run -d -p 8080:80 -- jwt-auth-api jwt-auth-api_container
 ```
 ## Usage
-SQLite .db file is pre-filled with data, there are 4 users and their roles/policies. These are their credentials
+SQLite .db file is pre-filled with data, there are 5 users and their roles/policies. These are their credentials
 `` Login:Password``
 ``admin:admin``
 ``staff3:staff3``
