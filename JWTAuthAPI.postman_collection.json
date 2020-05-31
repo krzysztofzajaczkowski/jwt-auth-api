@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "b01a92ae-abdc-4c62-9d21-e1c99e95b8b6",
+		"_postman_id": "dc6d8213-408f-4ffa-b20e-df6405339ddf",
 		"name": "JWTAuthAPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -76,7 +76,7 @@
 					"response": []
 				},
 				{
-					"name": "[Auth] Admin/GetAll copy",
+					"name": "[Auth] Admin/GetAll",
 					"request": {
 						"method": "GET",
 						"header": [
@@ -167,7 +167,7 @@
 								"profile"
 							]
 						},
-						"description": "[Authentication and Authorization]\r\nGet all your(user's) information."
+						"description": "[Authentication and Authorization]\r\nGet all user's information."
 					},
 					"response": []
 				},
