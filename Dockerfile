@@ -17,7 +17,7 @@ COPY JWTAuthApi.Data/. ./JWTAuthApi.Data/
 COPY JWTAuthApi.Core/. ./JWTAuthApi.Core/ 
 RUN mkdir -p JWTAuthApi.Data/Database
 RUN mkdir -p .JWTAuthApi.Data/Database
-RUN mkdir dupa
+
 COPY JWTAuthApi.Data/Database/applicationDatabase.db JWTAuthApi.Data/Database/applicationDatabase.db
 COPY JWTAuthApi.Data/Database/applicationDatabase.db .JWTAuthApi.Data/Database/applicationDatabase.db
 COPY JWTAuthApi.Data/Database/applicationDatabase.db .applicationDatabase.db
